@@ -3,7 +3,7 @@ const app = express(); //the Express Server; we can have several different expre
 
 app.get("/", (req, res) => {
   //route handler; called any time a request to "/" is made; req & res are objects
-  res.send({ hi: "there" });
+  res.send({ hi: "Tzvetan" });
 });
 
 const PORT = process.env.PORT || 5000;
