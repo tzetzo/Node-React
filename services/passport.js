@@ -21,7 +21,8 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback" //should be included in "Authorized redirect URIs" in https://console.developers.google.com
+      callbackURL: "/auth/google/callback", //should be included in "Authorized redirect URIs" in https://console.developers.google.com
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       //called after user gives permission to our app through Google OAUTH2; all the requested user details returned through "profile"
