@@ -24,18 +24,39 @@ passport.use(
       callbackURL: "/auth/google/callback", //should be included in "Authorized redirect URIs" in https://console.developers.google.com
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       //called after user gives permission to our app through Google OAUTH2; all the requested user details returned through "profile"
-      User.findOne({ googleId: profile.id }).then(existingUser => {
-        if (existingUser) {
-          //user already in DB
-          done(null, existingUser);
-        } else {
-          new User({ googleId: profile.id })
-            .save()
-            .then(user => done(null, user)); //create and savee to the Db a document in the collection
-        }
-      });
+
+      // User.findOne({ googleId: profile.id }).then(existingUser => {
+      //   if (existingUser) {
+      //     //user already in DB
+      //     done(null, existingUser);
+      //   } else {
+      //     new User({ googleId: profile.id })
+      //       .save()
+      //       .then(user => done(null, user)); //create and savee to the Db a document in the collection
+      //   }
+      // });
+
+      // const existingUser = await User.findOne({ googleId: profile.id });
+      //
+      // if (existingUser) {
+      //   //user already in DB
+      //   done(null, existingUser);
+      // } else {
+      //   const user = await new User({ googleId: profile.id }).save(); //create and savee to the Db a document in the collection
+      //   done(null, user);
+      // }
+
+      const existingUser = await User.findOne({ googleId: profile.id });
+
+      if (existingUser) {
+        //user already in DB
+        return done(null, existingUser);
+      }
+
+      const user = await new User({ googleId: profile.id }).save(); //create and save to the Db a document in the collection
+      done(null, user);
     }
   )
 );
