@@ -9,7 +9,7 @@ require("./models/Survey");
 require("./services/passport"); //not assigning to a const since we only want it executed; 028 lesson
 
 //MongoDB Server connection
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 mongoose.connect(
   keys.mongoURI,
   { useNewUrlParser: true }
