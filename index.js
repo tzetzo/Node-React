@@ -5,9 +5,11 @@ const passport = require("passport");
 const bodyParser = require("body-parser"); //middleware for parsing JSON requests inside post route handlers
 const keys = require("./config/keys");
 require("./models/User"); //create the Mongoose Model with Schema
+require("./models/Survey");
 require("./services/passport"); //not assigning to a const since we only want it executed; 028 lesson
 
 //MongoDB Server connection
+mongoose.Promise = global.Promise;
 mongoose.connect(
   keys.mongoURI,
   { useNewUrlParser: true }
@@ -33,6 +35,7 @@ app.use(passport.session());
 //Route handlers
 require("./routes/authRoutes")(app); //importing a function and immediately call it; 028 lesson
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build")); //"npm run build" has to be executed inside the "client" folder when deploying in production
