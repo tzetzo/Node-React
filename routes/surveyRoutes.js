@@ -75,12 +75,15 @@ module.exports = app => {
       const mailer = new Mailer(survey, surveyTemplate(survey));
 
       try {
+        console.log("first");
         await mailer.send(); //send all the e-mails
+        console.log("second");
         await survey.save(); //save the survey in MongoDB
-
+        console.log("third");
         if (req.user.credits > 0) req.user.credits -= 1;
+        console.log("fourth");
         const user = await req.user.save();
-
+        console.log("fifth");
         res.send(user);
       } catch (err) {
         res.status(422).send(err);
