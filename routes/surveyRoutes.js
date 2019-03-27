@@ -74,17 +74,17 @@ module.exports = app => {
 
       const mailer = new Mailer(survey, surveyTemplate(survey));
 
-      //try {
-      await mailer.send(); //send all the e-mails
-      //   await survey.save(); //save the survey in MongoDB
-      //
-      //   if (req.user.credits > 0) req.user.credits -= 1;
-      //   const user = await req.user.save();
-      //
-      //   res.send(user);
-      // } catch (err) {
-      //   res.status(422).send(err);
-      // }
+      try {
+        await mailer.send(); //send all the e-mails
+        await survey.save(); //save the survey in MongoDB
+
+        if (req.user.credits > 0) req.user.credits -= 1;
+        const user = await req.user.save();
+
+        res.send(user);
+      } catch (err) {
+        res.status(422).send(err);
+      }
     }
   );
 };
