@@ -21,7 +21,7 @@ const app = express(); //the Express Server; we can have several different expre
 //Middleware
 app.use(bodyParser.json());
 //enable cookies through middleware cookie-session
-//cookie-session middleware saves data in req.session; passport middleware looks for data in req.session
+//cookie-session middleware saves data in req.session; passport middleware looks for data in req.session -> 44 lesson
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -37,10 +37,13 @@ require("./routes/authRoutes")(app); //importing a function and immediately call
 require("./routes/billingRoutes")(app);
 require("./routes/surveyRoutes")(app);
 
+//if none of the above routes dont match use the following routes(serve the React app) 109 lesson:
 if (process.env.NODE_ENV === "production") {
+  //serve up production assets like main.js & main.css:
   app.use(express.static("client/build")); //"npm run build" has to be executed inside the "client" folder when deploying in production
 
   const path = require("path");
+  //if none of the above routes match, serve up the index.html file 109 lesson:
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });

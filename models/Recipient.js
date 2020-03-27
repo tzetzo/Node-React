@@ -6,4 +6,4 @@ const recipientSchema = new Schema({
   responded: { type: Boolean, default: false }
 });
 
-module.exports = recipientSchema; //create a Mongoose Model & "users" Collection
+module.exports = recipientSchema;
