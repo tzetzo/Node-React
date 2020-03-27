@@ -7,7 +7,7 @@ const User = mongoose.model("users"); //get the Mongoose Model; should already b
 
 //serializeUser is auto called by passport with the user whose profile was fetched;
 passport.serializeUser((user, done) => {
-  //user.id is the ID mongoDB assigns to the document representing the user and is put into the cookie for identifying the user
+  //user.id is the ID mongoDB assigns to the document representing the user and is put into the cookie for identifying the user; 039 lesson
   done(null, user.id);
 });
 passport.deserializeUser((id, done) => {
