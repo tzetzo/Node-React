@@ -4,9 +4,9 @@ const cookieSession = require("cookie-session");
 const passport = require("passport");
 const bodyParser = require("body-parser"); //middleware for parsing JSON requests inside post route handlers
 const keys = require("./config/keys");
-require("./models/User"); //create the Mongoose Model with Schema
+require("./models/User"); //create the Mongoose Model with Schema on bootup
 require("./models/Survey");
-require("./services/passport"); //not assigning to a const since we only want it executed; 028 lesson
+require("./services/passport"); //not assigning to a const since we only want it executed; 028 lesson; should be after the require for the User model since it uses it! 036 lesson
 
 //MongoDB Server connection
 // mongoose.Promise = global.Promise;
@@ -20,7 +20,7 @@ const app = express(); //the Express Server; we can have several different expre
 
 //Middleware
 app.use(bodyParser.json());
-//enable cookies through middleware cookie-session
+//enable cookies through middleware cookie-session -> 41 lesson
 //cookie-session middleware saves data in req.session; passport middleware looks for data in req.session -> 44 lesson
 app.use(
   cookieSession({
@@ -29,6 +29,7 @@ app.use(
   })
 );
 //use cookies through middleware passport
+//tell passport to use cookies to handle authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
