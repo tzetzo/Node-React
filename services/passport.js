@@ -24,8 +24,8 @@ passport.use(
     {
       clientID: keys.FACEBOOK_APP_ID,
       clientSecret: keys.FACEBOOK_APP_SECRET,
-      callbackURL: "/auth/facebook/callback", //should NOT be included in "Valid OAuth Redirect URIs" - it includes it by default for localhost! https://developers.facebook.com/apps/2939235592804755/fb-login/settings/
-      proxy: true,
+      callbackURL: "/auth/facebook/callback", //should NOT be included in "Valid OAuth Redirect URIs" for the dev environment - it includes it by default for localhost! https://developers.facebook.com/apps/2939235592804755/fb-login/settings/
+      proxy: true, //means we trust Heroku Proxy; otherwise we get redirect mismatch error (50 lesson)
       profileFields: ["email", "name", "displayName"]
     },
     async (accessToken, refreshToken, profile, done) => {

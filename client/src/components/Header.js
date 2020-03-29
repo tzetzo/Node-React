@@ -10,11 +10,26 @@ class Header extends Component {
       case null:
         return;
       case false:
-        return (
-          <li>
-            <a href="/auth/google">Login With Google</a>
+        return [
+          <li key="1" style={{height:"100%"}}>
+            <a href="/auth/google" style={{height:"100%"}} class="valign-wrapper">
+              <img
+                style={{ height: "2rem" }}
+                alt="Google Sign"
+                src={require(`../images/google_login.png`)}
+              />
+            </a>
+          </li>,
+          <li key="2" style={{height:"100%"}}>
+            <a href="/auth/facebook" style={{height:"100%"}} class="valign-wrapper">
+              <img
+                style={{ height: "2rem" }}
+                alt="Facebook Sign"
+                src={require(`../images/fb_login.png`)}
+              />
+            </a>
           </li>
-        );
+        ];
 
       default:
         return [
@@ -43,7 +58,7 @@ class Header extends Component {
           >
             Emaily
           </Link>
-          <ul className="right">{this.renderContent()}</ul>
+          <ul className="right" style={{height:"100%"}}>{this.renderContent()}</ul>
         </div>
       </nav>
     );
