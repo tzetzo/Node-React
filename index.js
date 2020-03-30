@@ -2,7 +2,7 @@ const express = require("express"); //commonJS module format as opposed to ES201
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
-const bodyParser = require("body-parser"); //middleware for parsing JSON requests inside post route handlers
+// const bodyParser = require("body-parser"); //middleware for parsing JSON requests inside post route handlers
 const keys = require("./config/keys");
 require("./models/User"); //create the Mongoose Model with Schema on bootup
 require("./models/Survey");
@@ -19,7 +19,7 @@ mongoose.connect(
 const app = express(); //the Express Server; we can have several different express apps/Servers
 
 //Middleware
-app.use(bodyParser.json());
+app.use(express.json()); //app.use(bodyParser.json());
 //enable cookies through middleware cookie-session -> 41 lesson
 //cookie-session middleware saves data in req.session; passport middleware looks for data in req.session -> 44 lesson
 app.use(
