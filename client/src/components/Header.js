@@ -12,19 +12,19 @@ class Header extends Component {
       case false:
         return [
           <li key="1" style={{height:"100%"}}>
-            <a href="/auth/google" style={{height:"100%"}} class="valign-wrapper">
+            <a href="/auth/google" style={{height:"100%"}} className="valign-wrapper">
               <img
                 style={{ height: "2rem" }}
-                alt="Google Sign"
+                alt="Google SignIn"
                 src={require(`../images/google_login.png`)}
               />
             </a>
           </li>,
           <li key="2" style={{height:"100%"}}>
-            <a href="/auth/facebook" style={{height:"100%"}} class="valign-wrapper">
+            <a href="/auth/facebook" style={{height:"100%"}} className="valign-wrapper">
               <img
                 style={{ height: "2rem" }}
-                alt="Facebook Sign"
+                alt="Facebook SignIn"
                 src={require(`../images/fb_login.png`)}
               />
             </a>
