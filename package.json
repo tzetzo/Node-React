@@ -30,5 +30,8 @@
     "path-parser": "^4.2.0",
     "sendgrid": "^5.2.3",
     "stripe": "^6.28.0"
+  },
+  "devDependencies": {
+    "ngrok": "^3.2.7"
   }
 }

@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import Payments from "./Payments";
-
 class Header extends Component {
   renderContent() {
     switch (this.props.auth) {
@@ -11,8 +9,12 @@ class Header extends Component {
         return;
       case false:
         return [
-          <li key="1" style={{height:"100%"}}>
-            <a href="/auth/google" style={{height:"100%"}} className="valign-wrapper">
+          <li key="1" style={{ height: "100%" }}>
+            <a
+              href="/auth/google"
+              style={{ height: "100%" }}
+              className="valign-wrapper"
+            >
               <img
                 style={{ height: "2rem" }}
                 alt="Google SignIn"
@@ -20,8 +22,12 @@ class Header extends Component {
               />
             </a>
           </li>,
-          <li key="2" style={{height:"100%"}}>
-            <a href="/auth/facebook" style={{height:"100%"}} className="valign-wrapper">
+          <li key="2" style={{ height: "100%" }}>
+            <a
+              href="/auth/facebook"
+              style={{ height: "100%" }}
+              className="valign-wrapper"
+            >
               <img
                 style={{ height: "2rem" }}
                 alt="Facebook SignIn"
@@ -34,7 +40,9 @@ class Header extends Component {
       default:
         return [
           <li key="1">
-            <Payments />
+            <Link to="/checkout" className="btn">
+              Add credits
+            </Link>
           </li>,
           <li key="2" style={{ margin: "0 10px" }}>
             Credits: {this.props.auth.credits}
@@ -58,7 +66,9 @@ class Header extends Component {
           >
             Emaily
           </Link>
-          <ul className="right" style={{height:"100%"}}>{this.renderContent()}</ul>
+          <ul className="right" style={{ height: "100%" }}>
+            {this.renderContent()}
+          </ul>
         </div>
       </nav>
     );
