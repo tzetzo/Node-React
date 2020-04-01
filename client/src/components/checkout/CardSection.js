@@ -32,27 +32,50 @@ function CardSection(props) {
     <React.Fragment>
       <label>
         First Name
-        <input onChange={props.onInputChange} type="text" name="first_name" required />
+        <input
+          onChange={props.onInputChange}
+          type="text"
+          name="first_name"
+        />
       </label>
       <label>
         Last Name
-        <input onChange={props.onInputChange} type="text" name="last_name" required />
-      </label>
-      <label>
-        Card Number
-        <CardNumberElement options={CARD_ELEMENT_OPTIONS} />
-      </label>
-      <label>
-        Expiry Date
-        <CardExpiryElement options={CARD_ELEMENT_OPTIONS} />
-      </label>
-      <label>
-        CVC
-        <CardCvcElement options={CARD_ELEMENT_OPTIONS} />
+        <input
+          onChange={props.onInputChange}
+          type="text"
+          name="last_name"
+        />
       </label>
       <label>
         Postal Code
-        <input onChange={props.onInputChange} type="text" name="postal_code" maxLength="9" required />
+        <input
+          onChange={props.onInputChange}
+          type="text"
+          name="postal_code"
+          maxLength="9"
+          minLength="3"
+        />
+      </label>
+      <label>
+        Card Number
+        <CardNumberElement
+          options={CARD_ELEMENT_OPTIONS}
+          onChange={props.onCardInfoChange}
+        />
+      </label>
+      <label>
+        Expiry Date
+        <CardExpiryElement
+          options={CARD_ELEMENT_OPTIONS}
+          onChange={props.onCardInfoChange}
+        />
+      </label>
+      <label>
+        CVC
+        <CardCvcElement
+          options={CARD_ELEMENT_OPTIONS}
+          onChange={props.onCardInfoChange}
+        />
       </label>
     </React.Fragment>
   );

@@ -71,12 +71,9 @@ module.exports = app => {
       // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds)
       console.log("💰 Payment captured!");
 
-      User.findOneAndUpdate(
-        { _id: req.body.data.object.metadata.userId },
-        {
-          $inc: { credits: 5 }
-        }
-      ).exec();
+      User.findByIdAndUpdate(req.body.data.object.metadata.userId, {
+        $inc: { credits: 5 }
+      }).exec();
     } else if (eventType === "payment_intent.payment_failed") {
       console.log("❌ Payment failed.");
     }

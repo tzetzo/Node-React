@@ -10,6 +10,7 @@ import axios from "axios";
 import history from "../../history";
 import CardSection from "./CardSection";
 import { fetchUser } from "../../actions";
+import Progress from "../Progress";
 
 function CheckoutForm({ userId, fetchUser }) {
   const [input, setInput] = useState({
@@ -18,13 +19,28 @@ function CheckoutForm({ userId, fetchUser }) {
     postal_code: ""
   });
 
+  const [cardInfo, setCardInfo] = useState({
+    cardNumber: false,
+    cardExpiry: false,
+    cardCvc: false
+  });
+
+  const [processing, setProcessing] = useState(false);
+
   const stripe = useStripe();
   const elements = useElements();
 
   const onInputChange = e =>
     setInput({ ...input, [e.target.name]: e.target.value });
 
+  const onCardInfoChange = e =>
+    e.complete
+      ? setCardInfo({ ...cardInfo, [e.elementType]: true })
+      : setCardInfo({ ...cardInfo, [e.elementType]: false });
+
   const handleSubmit = async event => {
+    setProcessing(true);
+
     const { first_name, last_name, postal_code } = input;
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -55,8 +71,9 @@ function CheckoutForm({ userId, fetchUser }) {
     // console.log(result, elements.getElement(CardElement));
 
     if (result.error) {
+      setProcessing(false);
       // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message);
+      alert(result.error.message);
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === "succeeded") {
@@ -65,7 +82,7 @@ function CheckoutForm({ userId, fetchUser }) {
         // execution. Set up a webhook or plugin to listen for the
         // payment_intent.succeeded event that handles any business critical
         // post-payment actions.
-        alert("Payment successful!");
+        setProcessing(false);
         fetchUser();
         history.push("/");
       }
@@ -73,12 +90,30 @@ function CheckoutForm({ userId, fetchUser }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardSection onInputChange={onInputChange} />
-      <button disabled={!stripe} className="btn">
-        Pay $5.00
-      </button>
-    </form>
+    <React.Fragment>
+      <form onSubmit={handleSubmit} className="container" style={{marginTop:"3rem"}}>
+        <CardSection
+          onInputChange={onInputChange}
+          onCardInfoChange={onCardInfoChange}
+        />
+        <button
+          disabled={
+            !stripe ||
+            !input.first_name ||
+            !input.last_name ||
+            !input.postal_code ||
+            !cardInfo.cardNumber ||
+            !cardInfo.cardExpiry ||
+            !cardInfo.cardCvc
+          }
+          className="btn"
+          style={{marginTop: "3rem", width: "100%"}}
+        >
+          Pay $5.00
+        </button>
+      </form>
+      {processing && <Progress />}
+    </React.Fragment>
   );
 }
 
