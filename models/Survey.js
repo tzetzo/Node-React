@@ -15,3 +15,5 @@ const surveySchema = new Schema({
 });
 
 mongoose.model("surveys", surveySchema); //create a Mongoose Model & "surveys" Collection
+
+// we dont use module.exports here! Instead we access the Model through mongoose.model() - 036 lesson
