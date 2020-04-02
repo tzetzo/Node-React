@@ -25,7 +25,7 @@ const Progress = props => {
       >
         <div className="modal-content center">
           <h3>Please wait ...</h3>
-          <p>We are processing your payment.</p>
+          <p>{props.message}</p>
           <div className="progress">
             <div className="indeterminate" />
           </div>

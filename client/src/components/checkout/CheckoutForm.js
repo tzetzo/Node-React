@@ -112,7 +112,7 @@ function CheckoutForm({ userId, fetchUser }) {
           Pay $5.00
         </button>
       </form>
-      {processing && <Progress />}
+      {processing && <Progress message="We are processing your payment" />}
     </React.Fragment>
   );
 }

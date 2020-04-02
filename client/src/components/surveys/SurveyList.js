@@ -33,7 +33,7 @@ class SurveyList extends Component {
 }
 
 function mapStateToProps({ surveys }) {
-  return { surveys };
+  return { surveys: surveys.surveys };
 }
 
 // const SurveyFormReview WithRouter = withRouter(SurveyFormReview);
