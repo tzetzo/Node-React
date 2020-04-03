@@ -4,8 +4,15 @@ import { connect } from "react-redux";
 import formFields from "./formFields";
 import * as actions from "../../actions";
 import Progress from "../Progress";
+import Failure from "../Failure";
 
-const SurveyFormReview = ({ onCancel, formValues, submitSurvey, sending }) => {
+const SurveyFormReview = ({
+  onCancel,
+  formValues,
+  createSurvey,
+  processing,
+  error
+}) => {
   const reviewFields = _.map(formFields, ({ name, label }) => {
     return (
       <div key={name}>
@@ -27,14 +34,20 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey, sending }) => {
           Back
         </button>
         <button
-          onClick={() => submitSurvey(formValues)}
+          onClick={() => createSurvey(formValues)}
           className="green btn-flat right white-text"
         >
-          Send Survey
+          Create Survey
           <i className="material-icons right">email</i>
         </button>
       </div>
-      {sending && <Progress message="We are sending your survey" />}
+      {processing && (
+        <Progress
+          title="Please wait ..."
+          message="We are creating your survey"
+        />
+      )}
+      {error && <Failure redirect="/checkout" error={error} buttonText="Add Credits" />}
     </React.Fragment>
   );
 };
@@ -42,7 +55,8 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey, sending }) => {
 function mapStateToProps(state) {
   return {
     formValues: state.form.surveyForm.values,
-    sending: state.surveys.sending
+    processing: state.surveys.processing,
+    error: state.surveys.error
   };
 }
 

@@ -16,7 +16,7 @@ module.exports = app => {
       amount: 500, //calculateOrderAmount(items),
       currency: "usd", //currency
       description: "$5 for 5 email credits",
-      metadata: { userId: req.user.id } //include the user ID so that we can update the user when payment is complete
+      metadata: { userId: req.user.id } //include the user ID so that we can update the user when payment_intent.succeeded
     });
 
     // Send publishable key and PaymentIntent details to client
@@ -60,7 +60,7 @@ module.exports = app => {
       // Funds have been captured
       // Fulfill any orders, e-mail receipts, etc
       // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds)
-      console.log("💰 Payment captured!");
+      // console.log("💰 Payment captured!");
 
       User.findByIdAndUpdate(req.body.data.object.metadata.userId, {
         $inc: { credits: 5 }

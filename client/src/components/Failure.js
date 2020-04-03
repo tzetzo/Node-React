@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
 
-const Progress = ({title, message}) => {
-  return ReactDOM.createPortal(
+const Failure = props =>
+  ReactDOM.createPortal(
     <div
       style={{
         position: "absolute",
@@ -24,16 +25,15 @@ const Progress = ({title, message}) => {
         }}
       >
         <div className="modal-content center">
-          <h3>{title}</h3>
-          <p>{message}</p>
-          <div className="progress">
-            <div className="indeterminate" />
-          </div>
+          <h3>Failure</h3>
+          <p>{props.error}</p>
+          <Link to={props.redirect} className="btn">
+            {props.buttonText}
+          </Link>
         </div>
       </div>
     </div>,
     document.querySelector("#progress")
   );
-};
 
-export default Progress;
+export default Failure;

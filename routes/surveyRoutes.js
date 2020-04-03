@@ -87,4 +87,48 @@ module.exports = app => {
       }
     }
   );
+
+  app.get(
+    //path used by the React app to get a single survey
+    "/api/surveys/:id",
+    requireLogin,
+    async (req, res) => {
+      try {
+        const survey = await Survey.findById(req.params.id).select({
+          //select a survey by this ID but exclude the 'recipients' field
+          recipients: false
+        });
+
+        if (!survey) {
+          return res.status(404).send();
+        }
+
+        res.send(survey);
+      } catch (error) {
+        res.status(400).send(error);
+      }
+    }
+  );
+
+  app.delete(
+    //path used by the React app to delete a survey
+    "/api/surveys/:id",
+    requireLogin,
+    async (req, res) => {
+      try {
+        const survey = await Survey.findOneAndDelete({
+          _id: req.params.id,
+          _user: req.user._id
+        });
+
+        if (!survey) {
+          return res.status(404).send();
+        }
+
+        res.send(survey);
+      } catch (error) {
+        res.status(400).send(error);
+      }
+    }
+  );
 };

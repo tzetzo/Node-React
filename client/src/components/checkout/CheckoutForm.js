@@ -9,10 +9,10 @@ import axios from "axios";
 
 import history from "../../history";
 import CardSection from "./CardSection";
-import { fetchUser } from "../../actions";
+import { updateUserCredits } from "../../actions";
 import Progress from "../Progress";
 
-function CheckoutForm({ userId, fetchUser }) {
+function CheckoutForm({ userId, updateUserCredits }) {
   const [input, setInput] = useState({
     first_name: "",
     last_name: "",
@@ -82,8 +82,8 @@ function CheckoutForm({ userId, fetchUser }) {
         // execution. Set up a webhook or plugin to listen for the
         // payment_intent.succeeded event that handles any business critical
         // post-payment actions.
+        updateUserCredits();
         setProcessing(false);
-        fetchUser();
         history.push("/");
       }
     }
@@ -91,7 +91,11 @@ function CheckoutForm({ userId, fetchUser }) {
 
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit} className="container" style={{marginTop:"3rem"}}>
+      <form
+        onSubmit={handleSubmit}
+        className="container"
+        style={{ marginTop: "3rem" }}
+      >
         <CardSection
           onInputChange={onInputChange}
           onCardInfoChange={onCardInfoChange}
@@ -107,12 +111,17 @@ function CheckoutForm({ userId, fetchUser }) {
             !cardInfo.cardCvc
           }
           className="btn"
-          style={{marginTop: "3rem", width: "100%"}}
+          style={{ marginTop: "3rem", width: "100%" }}
         >
           Pay $5.00
         </button>
       </form>
-      {processing && <Progress message="We are processing your payment" />}
+      {processing && (
+        <Progress
+          title="Please wait ..."
+          message="We are processing your payment"
+        />
+      )}
     </React.Fragment>
   );
 }
@@ -124,5 +133,5 @@ const mapStateToProps = ({ auth }) => {
 
 export default connect(
   mapStateToProps,
-  { fetchUser }
+  { updateUserCredits }
 )(CheckoutForm);
