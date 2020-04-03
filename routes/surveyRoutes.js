@@ -39,14 +39,14 @@ module.exports = app => {
       .each(({ surveyId, email, choice }) => {
         Survey.updateOne(
           {
-            _id: surveyId, //Mongo uses _id
+            _id: surveyId, //Mongo uses _id; we are looking for survey with that ID
             recipients: {
-              $elemMatch: { email: email, responded: false }
+              $elemMatch: { email: email, responded: false } // at the same time we also look for a recipient with this email that hasnt responded yet!
             }
           },
           {
             $inc: { [choice]: 1 },
-            $set: { "recipients.$.responded": true },
+            $set: { "recipients.$.responded": true }, // update the recipient from the query($elemMatch)
             lastResponded: new Date()
           }
         ).exec(); //executes the query
