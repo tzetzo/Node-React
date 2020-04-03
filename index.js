@@ -8,6 +8,15 @@ require("./models/User"); //create the Mongoose Model with Schema on bootup
 require("./models/Survey");
 require("./services/passport"); //not assigning to a const since we only want it executed; 028 lesson; should be after the require for the User model since it uses it! 036 lesson
 
+//needed to test the /api/webhook & /api/surveys/webhooks endpoint from localhost
+if (process.env.NODE_ENV !== "production") {
+  const ngrok = require("ngrok");
+  (async function() {
+    const url = await ngrok.connect(5000);
+    console.log(url); //copy the generated URL & paste it in https://app.sendgrid.com/settings/mail_settings OR https://dashboard.stripe.com/test/webhooks/
+  })();
+}
+
 //MongoDB Server connection
 // mongoose.Promise = global.Promise;
 mongoose.connect(

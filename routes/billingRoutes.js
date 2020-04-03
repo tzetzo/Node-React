@@ -5,15 +5,6 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("users");
 
-//needed to test the /api/webhook endpoint from localhost
-if (process.env.NODE_ENV !== "production") {
-  const ngrok = require("ngrok");
-  (async function() {
-    const url = await ngrok.connect(5000);
-    console.log(url);
-  })();
-}
-
 module.exports = app => {
   //https://github.com/stripe-samples/accept-a-card-payment/blob/master/using-webhooks/server/node/server.js#L37-L40
   app.post("/api/create-payment-intent", requireLogin, async (req, res) => {
