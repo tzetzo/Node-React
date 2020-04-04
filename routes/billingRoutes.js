@@ -29,7 +29,7 @@ module.exports = app => {
   // Expose a endpoint as a webhook handler for asynchronous events.
   // Configure your webhook in the stripe developer dashboard
   // https://dashboard.stripe.com/test/webhooks
-  app.post("/api/webhook", async (req, res) => {
+  app.post("/api/billing/webhook", async (req, res) => {
     let data, eventType;
 
     // Check if webhook signing is configured.
