@@ -32,7 +32,7 @@ module.exports = app => {
     res.send("Thanks for voting!");
   });
 
-  app.post("/api/surveys/webhooks", (req, res) => {
+  app.post("/api/surveys/webhook", (req, res) => {
     const p = Path.Path.createPath("/api/surveys/:surveyId/:choice"); //we want to extract surveyId & choice
 
     _.chain(req.body)
