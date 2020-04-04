@@ -3,8 +3,9 @@ import {
   FETCH_SURVEY,
   CREATE_SURVEY,
   DELETE_SURVEY,
-  PROCESSING_SURVEY_REQUEST,
-  PROCESSING_SURVEY_FAILURE
+  PROCESSING_REQUEST,
+  PROCESSING_FAILURE,
+  CLEAR_ERROR
 } from "../actions/types";
 
 export default function(
@@ -16,13 +17,15 @@ export default function(
       return { surveys: action.payload };
     case FETCH_SURVEY:
       return { surveys: [action.payload], processing: false, error: "" };
-    case PROCESSING_SURVEY_REQUEST:
+    case PROCESSING_REQUEST:
       return { ...state, processing: true };
     case CREATE_SURVEY:
     case DELETE_SURVEY:
       return { ...state, processing: false, error: "" };
-    case PROCESSING_SURVEY_FAILURE:
+    case PROCESSING_FAILURE:
       return { ...state, processing: false, error: action.payload };
+    case CLEAR_ERROR:
+      return { ...state, error: "" };
     default:
       return state;
   }

@@ -6,24 +6,38 @@ import {
   FETCH_SURVEY,
   CREATE_SURVEY,
   DELETE_SURVEY,
-  PROCESSING_SURVEY_REQUEST,
-  PROCESSING_SURVEY_FAILURE,
-  UPDATE_USER_CREDITS
+  PROCESSING_REQUEST,
+  PROCESSING_FAILURE,
+  UPDATE_USER_CREDITS,
+  CLEAR_ERROR
 } from "./types";
 
-export const updateUserCredits = () => {
+export const updateUserCredits = () => { //better solution is using websockets and update the credits when server sends them
   return {
     type: UPDATE_USER_CREDITS
   };
 };
 
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR
+  };
+};
+
 export const fetchUser = () => async dispatch => {
-  const res = await axios.get("/api/current_user");
-  dispatch({ type: FETCH_USER, payload: res.data });
+  try {
+    const res = await axios.get("/api/current_user");
+    dispatch({ type: FETCH_USER, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: PROCESSING_FAILURE,
+      payload: `${error.message} -> Please check you Internet connection`
+    });
+  }
 };
 
 export const createSurvey = formValues => async dispatch => {
-  dispatch({ type: PROCESSING_SURVEY_REQUEST }); // opens the progress screen
+  dispatch({ type: PROCESSING_REQUEST }); // opens the progress screen
 
   try {
     const res = await axios.post("/api/surveys", formValues);
@@ -31,40 +45,68 @@ export const createSurvey = formValues => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res.data }); //so to update the credits in the UI
     history.push("/surveys");
   } catch (error) {
-    dispatch({ type: PROCESSING_SURVEY_FAILURE, payload: error.response.data.error });
+    const payload = error.response
+      ? error.response.data.error //error returned by the back-end
+      : `${error.message} -> Please check you Internet connection`;
+
+    dispatch({
+      type: PROCESSING_FAILURE,
+      payload
+    });
   }
 };
 
 export const fetchSurveys = () => async dispatch => {
-  dispatch({ type: PROCESSING_SURVEY_REQUEST }); // opens the progress screen
+  dispatch({ type: PROCESSING_REQUEST }); // opens the progress screen
 
   try {
     const res = await axios.get("/api/surveys");
     dispatch({ type: FETCH_SURVEYS, payload: res.data });
   } catch (error) {
-    dispatch({ type: PROCESSING_SURVEY_FAILURE, payload: error.message });
+    const payload = error.response
+      ? error.response.data.error //error returned by the back-end
+      : `${error.message} -> Please check you Internet connection`;
+
+    dispatch({
+      type: PROCESSING_FAILURE,
+      payload
+    });
   }
 };
 
 export const fetchSurvey = id => async dispatch => {
-  dispatch({ type: PROCESSING_SURVEY_REQUEST }); // opens the progress screen
+  dispatch({ type: PROCESSING_REQUEST }); // opens the progress screen
 
   try {
     const res = await axios.get(`/api/surveys/${id}`);
     dispatch({ type: FETCH_SURVEY, payload: res.data });
   } catch (error) {
-    dispatch({ type: PROCESSING_SURVEY_FAILURE, payload: error.message });
+    const payload = error.response
+      ? error.response.data.error //error returned by the back-end
+      : `${error.message} -> Please check you Internet connection`;
+
+    dispatch({
+      type: PROCESSING_FAILURE,
+      payload
+    });
   }
 };
 
 export const deleteSurvey = id => async dispatch => {
-  dispatch({ type: PROCESSING_SURVEY_REQUEST }); // opens the progress screen
+  dispatch({ type: PROCESSING_REQUEST }); // opens the progress screen
 
   try {
     await axios.delete(`/api/surveys/${id}`);
     dispatch({ type: DELETE_SURVEY });
     history.push("/surveys");
   } catch (error) {
-    dispatch({ type: PROCESSING_SURVEY_FAILURE, payload: error.message });
+    const payload = error.response
+      ? error.response.data.error //error returned by the back-end
+      : `${error.message} -> Please check you Internet connection`;
+
+    dispatch({
+      type: PROCESSING_FAILURE,
+      payload
+    });
   }
 };

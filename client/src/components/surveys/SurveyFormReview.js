@@ -11,7 +11,8 @@ const SurveyFormReview = ({
   formValues,
   createSurvey,
   processing,
-  error
+  error,
+  clearError
 }) => {
   const reviewFields = _.map(formFields, ({ name, label }) => {
     return (
@@ -47,7 +48,7 @@ const SurveyFormReview = ({
           message="We are creating your survey"
         />
       )}
-      {error && <Failure redirect="/checkout" error={error} buttonText="Add Credits" />}
+      {error && <Failure error={error} clearError={clearError} />}
     </React.Fragment>
   );
 };

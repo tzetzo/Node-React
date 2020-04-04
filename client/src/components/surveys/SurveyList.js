@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { fetchSurveys } from "../../actions";
+import { fetchSurveys, clearError } from "../../actions";
 import Progress from "../Progress";
+import Failure from "../Failure";
 
 class SurveyList extends Component {
   componentDidMount() {
@@ -57,18 +58,25 @@ class SurveyList extends Component {
             message="We are fetching your surveys"
           />
         )}
+        {this.props.error && (
+          <Failure error={this.props.error} clearError={this.props.clearError} />
+        )}
       </React.Fragment>
     );
   }
 }
 
 function mapStateToProps({ surveys }) {
-  return { surveys: surveys.surveys, processing: surveys.processing };
+  return {
+    surveys: surveys.surveys,
+    processing: surveys.processing,
+    error: surveys.error
+  };
 }
 
 // const SurveyFormReview WithRouter = withRouter(SurveyFormReview);
 
 export default connect(
   mapStateToProps,
-  { fetchSurveys }
+  { fetchSurveys, clearError }
 )(SurveyList);

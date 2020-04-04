@@ -11,12 +11,21 @@ const Survey = mongoose.model("surveys"); //get the Mongoose Model; should alrea
 
 module.exports = app => {
   app.get("/api/surveys", requireLogin, async (req, res) => {
-    const surveys = await Survey.find({ _user: req.user.id }).select({
-      //select all surveys by this user but exclude the 'recipients' field
-      recipients: false
-    });
+    //path used by the React app to get the user surveys
+    try {
+      const surveys = await Survey.find({ _user: req.user.id }).select({
+        //select all surveys by this user but exclude the 'recipients' field
+        recipients: false
+      });
 
-    res.send(surveys);
+      if (!surveys) {
+        return res.status(404).send();
+      }
+
+      res.send(surveys);
+    } catch (error) {
+      res.status(400).send({ error: "Error finding the surveys" });
+    }
   });
 
   app.get("/api/surveys/:surveyId/:choice", (req, res) => {
@@ -82,8 +91,8 @@ module.exports = app => {
         const user = await req.user.save();
 
         res.send(user);
-      } catch (err) {
-        res.status(422).send(err);
+      } catch (error) {
+        res.status(422).send({ error: "Error creating the survey" });
       }
     }
   );
@@ -105,7 +114,7 @@ module.exports = app => {
 
         res.send(survey);
       } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({ error: "Error finding the survey" });
       }
     }
   );
@@ -127,7 +136,7 @@ module.exports = app => {
 
         res.send(survey);
       } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({ error: "Error deleting the survey" });
       }
     }
   );

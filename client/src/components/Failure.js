@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
 
 const Failure = props =>
   ReactDOM.createPortal(
@@ -10,7 +9,8 @@ const Failure = props =>
         top: "0",
         height: "100vh",
         width: "100vw",
-        backgroundColor: "#f5edd7"
+        backgroundColor: "#f5edd7",
+        zIndex: 10000
       }}
     >
       <div
@@ -27,13 +27,13 @@ const Failure = props =>
         <div className="modal-content center">
           <h3>Failure</h3>
           <p>{props.error}</p>
-          <Link to={props.redirect} className="btn">
-            {props.buttonText}
-          </Link>
+          <button onClick={props.clearError} className="btn">
+            Close
+          </button>
         </div>
       </div>
     </div>,
-    document.querySelector("#progress")
+    document.querySelector("#failure")
   );
 
 export default Failure;

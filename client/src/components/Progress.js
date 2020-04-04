@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Progress = ({title, message}) => {
+const Progress = ({ title, message }) => {
   return ReactDOM.createPortal(
     <div
       style={{
@@ -9,7 +9,8 @@ const Progress = ({title, message}) => {
         top: "0",
         height: "100vh",
         width: "100vw",
-        backgroundColor: "#f5edd7"
+        backgroundColor: "#f5edd7",
+        zIndex: 10000
       }}
     >
       <div
