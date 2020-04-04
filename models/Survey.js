@@ -7,6 +7,7 @@ const surveySchema = new Schema({
   subject: String, //field
   body: String,
   recipients: [RecipientSchema], //sub document collection
+  fromEmail: String,
   yes: { type: Number, default: 0 },
   no: { type: Number, default: 0 },
   _user: { type: Schema.Types.ObjectId, ref: "User" }, //_ shows this is a relationship property; associates the document to a user from the "User" Model;

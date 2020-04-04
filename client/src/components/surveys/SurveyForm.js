@@ -43,6 +43,7 @@ function validate(values) {
   const errors = {};
 
   errors.recipients = validateEmails(values.recipients || ""); //make sure emails entered are valid
+  errors.fromEmail = validateEmails(values.fromEmail || ""); //make sure fromEmail is valid
 
   _.each(formFields, ({ name }) => {
     if (!values[name]) {

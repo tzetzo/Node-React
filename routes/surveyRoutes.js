@@ -71,12 +71,13 @@ module.exports = app => {
     requireLogin,
     requireCredits,
     async (req, res) => {
-      const { title, subject, body, recipients } = req.body;
+      const { title, subject, body, recipients, fromEmail } = req.body;
       const survey = new Survey({
         title,
         subject,
         body,
         recipients: recipients.split(",").map(email => ({ email })), //the () needed so JS doesnt confuse {} with function body {}
+        fromEmail,
         _user: req.user.id,
         dateSent: Date.now()
       }); //create and save to the Db a document in the collection

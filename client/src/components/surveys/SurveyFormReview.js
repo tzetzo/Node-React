@@ -27,7 +27,7 @@ const SurveyFormReview = ({
     <React.Fragment>
       <div>
         <h5>Please confirm your entries</h5>
-        <div>{reviewFields}</div>
+        <div style={{margin: "3rem auto"}} >{reviewFields}</div>
         <button
           className="yellow darken-3 white-text btn-flat"
           onClick={onCancel}
