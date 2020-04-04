@@ -2,17 +2,31 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import arraySort from "array-sort";
 import { fetchSurveys, clearError } from "../../actions";
+import SurveySort from "./SurveySort";
+import sortFields from "./sortFields";
 import Progress from "../Progress";
 import Failure from "../Failure";
 
 class SurveyList extends Component {
+  state = { by: sortFields[0].value, reverse: true };
+
+  sortBy = by => {
+    this.setState({ by });
+  };
+  reverse = () => {
+    this.setState(prevState => ({ reverse: !prevState.reverse }));
+  };
+
   componentDidMount() {
     this.props.fetchSurveys();
   }
 
   renderSurveys() {
-    return this.props.surveys.reverse().map(survey => {
+    return arraySort(this.props.surveys, this.state.by, {
+      reverse: this.state.reverse
+    }).map(survey => {
       return (
         <div className="row" key={survey._id}>
           <div className="s12">
@@ -51,15 +65,26 @@ class SurveyList extends Component {
   render() {
     return (
       <React.Fragment>
+        <SurveySort
+          sortFields={sortFields}
+          sortBy={this.sortBy}
+          reverse={this.reverse}
+        />
+
         <div>{this.renderSurveys()}</div>
+
         {this.props.processing && (
           <Progress
             title="Please wait ..."
             message="We are fetching your surveys"
           />
         )}
+
         {this.props.error && (
-          <Failure error={this.props.error} clearError={this.props.clearError} />
+          <Failure
+            error={this.props.error}
+            clearError={this.props.clearError}
+          />
         )}
       </React.Fragment>
     );
@@ -73,8 +98,6 @@ function mapStateToProps({ surveys }) {
     error: surveys.error
   };
 }
-
-// const SurveyFormReview WithRouter = withRouter(SurveyFormReview);
 
 export default connect(
   mapStateToProps,
