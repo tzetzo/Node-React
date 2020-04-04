@@ -24,38 +24,48 @@ class SurveyList extends Component {
   }
 
   renderSurveys() {
+    if (this.props.surveys.length === 0)
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "18rem"
+          }}
+        >
+          YOU HAVE NOT CREATED SURVEYS YET
+        </div>
+      );
+
     return arraySort(this.props.surveys, this.state.by, {
       reverse: this.state.reverse
     }).map(survey => {
       return (
-        <div className="row" key={survey._id}>
-          <div className="s12">
-            <div className="card blue-grey darken-1">
-              <div className="card-content white-text">
-                <span className="card-title center">{survey.title}</span>
-              </div>
-              <div className="card-content white-text">
-                <span>{survey.body}</span>
-                <p className="right">
-                  Sent: {moment(survey.dateSent).format("DD MMM YYYY")}
-                </p>
-              </div>
-              <div className="card-content white-text">
-                <span style={{ marginRight: "3rem" }}>Yes: {survey.yes}</span>
-                <span style={{ marginRight: "3rem" }}>No: {survey.no}</span>
-                <p className="right">
-                  Last Responded:{" "}
-                  {survey.lastResponded
-                    ? moment(survey.lastResponded).format("DD MMM YYYY")
-                    : "N/A"}
-                </p>
-              </div>
-              <div className="card-content white-text center">
-                <Link to={`/surveys/delete/${survey._id}`} className="btn">
-                  Delete
-                </Link>
-              </div>
-            </div>
+        <div className="card blue-grey darken-1" key={survey._id}>
+          <div className="card-content white-text">
+            <span className="card-title center">{survey.title}</span>
+          </div>
+          <div className="card-content white-text">
+            <span>{survey.body}</span>
+            <p className="right">
+              Sent: {moment(survey.dateSent).format("DD MMM YYYY")}
+            </p>
+          </div>
+          <div className="card-content white-text">
+            <span style={{ marginRight: "3rem" }}>Yes: {survey.yes}</span>
+            <span style={{ marginRight: "3rem" }}>No: {survey.no}</span>
+            <p className="right">
+              Last Responded:{" "}
+              {survey.lastResponded
+                ? moment(survey.lastResponded).format("DD MMM YYYY")
+                : "N/A"}
+            </p>
+          </div>
+          <div className="card-content white-text center">
+            <Link to={`/surveys/delete/${survey._id}`} className="btn">
+              Delete
+            </Link>
           </div>
         </div>
       );
@@ -71,7 +81,11 @@ class SurveyList extends Component {
           reverse={this.reverse}
         />
 
-        <div>{this.renderSurveys()}</div>
+        <div>
+          <div className="row">
+            <div className="s12">{this.renderSurveys()}</div>
+          </div>
+        </div>
 
         {this.props.processing && (
           <Progress

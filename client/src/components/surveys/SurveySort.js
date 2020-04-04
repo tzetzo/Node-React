@@ -20,7 +20,7 @@ const SurveySort = ({ sortFields, sortBy, reverse }) => (
           Sort Surveys By . . .
         </option>
         {sortFields.map(field => {
-          return <option value={field.value}>{field.text}</option>;
+          return <option key={field.value} value={field.value}>{field.text}</option>;
         })}
       </select>
     </div>
