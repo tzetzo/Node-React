@@ -65,6 +65,8 @@ module.exports = app => {
       User.findByIdAndUpdate(req.body.data.object.metadata.userId, {
         $inc: { credits: 5 }
       }).exec();
+
+      res.send({}); //guarantees that whoever makes the request will not be left hanging; Stripe keeps sending the same event if we dont respond
     } else if (eventType === "payment_intent.payment_failed") {
       console.log("❌ Payment failed.");
     }
