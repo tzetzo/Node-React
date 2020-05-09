@@ -30,3 +30,9 @@ redirectDomain: "http://localhost:5000"
 - Unzip the file
 - In the newly created folder, run redis-server.exeÂ
 - You should see a window appear that says redis is running on port 6379
+
+6. Integration Testing with Headless Browser :
+
+- "npm run dev"
+- start "redis-server.exe" from the folder where redis is installed
+- "npm run test"
