@@ -7,11 +7,12 @@ const keys = require("./config/keys");
 require("./models/User"); //create the Mongoose Model with Schema on bootup
 require("./models/Survey");
 require("./services/passport"); //not assigning to a const since we only want it executed; 028 lesson; should be after the require for the User model since it uses it! 036 lesson
+require("./services/cache");
 
 //needed to test the /api/webhook & /api/surveys/webhooks endpoint from localhost
 if (process.env.NODE_ENV !== "production") {
   const ngrok = require("ngrok");
-  (async function() {
+  (async function () {
     const url = await ngrok.connect(5000);
     console.log(url); //copy the generated URL & paste it in https://app.sendgrid.com/settings/mail_settings OR https://dashboard.stripe.com/test/webhooks/
   })();
@@ -19,10 +20,10 @@ if (process.env.NODE_ENV !== "production") {
 
 //MongoDB Server connection
 // mongoose.Promise = global.Promise;
-mongoose.connect(
-  keys.mongoURI,
-  { useNewUrlParser: true }
-);
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //App
 const app = express(); //the Express Server; we can have several different express apps/Servers
@@ -34,7 +35,7 @@ app.use(express.json()); //app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey] //used to encrypt the cookie
+    keys: [keys.cookieKey], //used to encrypt the cookie
   })
 );
 //use cookies through middleware passport

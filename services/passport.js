@@ -12,9 +12,9 @@ passport.serializeUser((user, done) => {
   //user.id is the ID mongoDB assigns to the document representing the user and is put into the cookie for identifying the user; 039 lesson
   done(null, user.id);
 });
-//used to extract the user ID from the Cookie
+//used to extract the user ID from the Cookie; cookie-session saves the cookie object under req.session as {"passport":{"user":"87ifx8oq3"}}
 passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
+  User.findById(id).then((user) => {
     done(null, user); //user added to the req object accessible in all route handlers as req.user!
   });
 });
@@ -26,7 +26,7 @@ passport.use(
       clientSecret: keys.FACEBOOK_APP_SECRET,
       callbackURL: "/auth/facebook/callback", //should NOT be included in "Valid OAuth Redirect URIs" for the dev environment - it includes it by default for localhost! https://developers.facebook.com/apps/2939235592804755/fb-login/settings/
       proxy: true, //means we trust Heroku Proxy; otherwise we get redirect mismatch error (50 lesson)
-      profileFields: ["email", "name", "displayName"]
+      profileFields: ["email", "name", "displayName"],
     },
     async (accessToken, refreshToken, profile, done) => {
       //called after user gives permission to our app through Facebook OAUTH2; all the requested user details returned through "profile"
@@ -50,7 +50,7 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: "/auth/google/callback", //should be included in "Authorized redirect URIs" in https://console.developers.google.com
-      proxy: true
+      proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
       //called after user gives permission to our app through Google OAUTH2; all the requested user details returned through "profile"

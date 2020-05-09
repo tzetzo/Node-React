@@ -6,17 +6,20 @@ const requireLogin = require("../middlewares/requireLogin");
 const requireCredits = require("../middlewares/requireCredits");
 const Mailer = require("../services/Mailer");
 const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
+const clearCache = require("../middlewares/clearCache");
 
 const Survey = mongoose.model("surveys"); //get the Mongoose Model; should already be created; instead of directly require the Model from '/models/Survey'! necessary to prevent an issue if testing is introduced
 
-module.exports = app => {
+module.exports = (app) => {
   app.get("/api/surveys", requireLogin, async (req, res) => {
     //path used by the React app to get the user surveys
     try {
-      const surveys = await Survey.find({ _user: req.user.id }).select({
-        //select all surveys by this user but exclude the 'recipients' field
-        recipients: false
-      });
+      const surveys = await Survey.find({ _user: req.user.id })
+        .select({
+          //select all surveys by this user but exclude the 'recipients' field
+          recipients: false,
+        })
+        .cache({ key: req.user.id }); // using the custom method defined on the prototype of the mongoose.Query Class in /services/cache.js
 
       if (!surveys) {
         return res.status(404).send();
@@ -50,13 +53,13 @@ module.exports = app => {
           {
             _id: surveyId, //Mongo uses _id; we are looking for survey with that ID
             recipients: {
-              $elemMatch: { email: email, responded: false } // at the same time we also look for a recipient with this email that hasnt responded yet!
-            }
+              $elemMatch: { email: email, responded: false }, // at the same time we also look for a recipient with this email that hasnt responded yet!
+            },
           },
           {
             $inc: { [choice]: 1 },
             $set: { "recipients.$.responded": true }, // update the recipient from the query($elemMatch)
-            lastResponded: new Date()
+            lastResponded: new Date(),
           }
         ).exec(); //executes the query
       })
@@ -70,16 +73,17 @@ module.exports = app => {
     "/api/surveys",
     requireLogin,
     requireCredits,
+    clearCache,
     async (req, res) => {
       const { title, subject, body, recipients, fromEmail } = req.body;
       const survey = new Survey({
         title,
         subject,
         body,
-        recipients: recipients.split(",").map(email => ({ email })), //the () needed so JS doesnt confuse {} with function body {}
+        recipients: recipients.split(",").map((email) => ({ email })), //the () needed so JS doesnt confuse {} with function body {}
         fromEmail,
         _user: req.user.id,
-        dateSent: Date.now()
+        dateSent: Date.now(),
       }); //create and save to the Db a document in the collection
 
       const mailer = new Mailer(survey, surveyTemplate(survey));
@@ -106,7 +110,7 @@ module.exports = app => {
       try {
         const survey = await Survey.findById(req.params.id).select({
           //select a survey by this ID but exclude the 'recipients' field
-          recipients: false
+          recipients: false,
         });
 
         if (!survey) {
@@ -124,11 +128,12 @@ module.exports = app => {
     //path used by the React app to delete a survey
     "/api/surveys/:id",
     requireLogin,
+    clearCache,
     async (req, res) => {
       try {
         const survey = await Survey.findOneAndDelete({
           _id: req.params.id,
-          _user: req.user._id
+          _user: req.user._id,
         });
 
         if (!survey) {

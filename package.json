@@ -7,12 +7,19 @@
     "node": "10.15.1",
     "npm": "6.1.0"
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ],
+    "testEnvironment": "node"
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "jest --detectOpenHandles"
   },
   "author": "Tzvetan",
   "license": "ISC",
@@ -28,10 +35,12 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "path-parser": "^4.2.0",
+    "redis": "^3.0.2",
     "sendgrid": "^5.2.3",
     "stripe": "^6.28.0"
   },
   "devDependencies": {
-    "ngrok": "^3.2.7"
+    "ngrok": "^3.2.7",
+    "puppeteer": "^2.1.1"
   }
 }
