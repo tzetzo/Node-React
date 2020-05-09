@@ -12,11 +12,11 @@ import Failure from "../Failure";
 class SurveyList extends Component {
   state = { by: sortFields[0].value, reverse: true };
 
-  sortBy = by => {
+  sortBy = (by) => {
     this.setState({ by });
   };
   reverse = () => {
-    this.setState(prevState => ({ reverse: !prevState.reverse }));
+    this.setState((prevState) => ({ reverse: !prevState.reverse }));
   };
 
   componentDidMount() {
@@ -24,14 +24,14 @@ class SurveyList extends Component {
   }
 
   renderSurveys() {
-    if (this.props.surveys.length === 0)
+    if (this.props.surveys.length === 0 || !Array.isArray(this.props.surveys))
       return (
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "18rem"
+            height: "18rem",
           }}
         >
           YOU HAVE NOT CREATED SURVEYS YET
@@ -39,15 +39,15 @@ class SurveyList extends Component {
       );
 
     return arraySort(this.props.surveys, this.state.by, {
-      reverse: this.state.reverse
-    }).map(survey => {
+      reverse: this.state.reverse,
+    }).map((survey) => {
       return (
-        <div className="card blue-grey darken-1" key={survey._id}>
+        <div className="card blue-grey darken-1 test-card" key={survey._id}>
           <div className="card-content white-text">
-            <span className="card-title center">{survey.title}</span>
+            <span className="card-title center test-title">{survey.title}</span>
           </div>
           <div className="card-content white-text">
-            <span>{survey.body}</span>
+            <span className="test-body">{survey.body}</span>
             <p className="right">
               Sent: {moment(survey.dateSent).format("DD MMM YYYY")}
             </p>
@@ -109,11 +109,10 @@ function mapStateToProps({ surveys }) {
   return {
     surveys: surveys.surveys,
     processing: surveys.processing,
-    error: surveys.error
+    error: surveys.error,
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { fetchSurveys, clearError }
-)(SurveyList);
+export default connect(mapStateToProps, { fetchSurveys, clearError })(
+  SurveyList
+);

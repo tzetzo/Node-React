@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Failure = props =>
+const Failure = (props) =>
   ReactDOM.createPortal(
     <div
       style={{
@@ -10,7 +10,7 @@ const Failure = props =>
         height: "100vh",
         width: "100vw",
         backgroundColor: "#f5edd7",
-        zIndex: 10000
+        zIndex: 10000,
       }}
     >
       <div
@@ -21,12 +21,12 @@ const Failure = props =>
           justifyContent: "center",
           opacity: "1",
           top: "10%",
-          bottom: "10%"
+          bottom: "10%",
         }}
       >
         <div className="modal-content center">
           <h3>Failure</h3>
-          <p>{props.error}</p>
+          <p className="test-failure">{props.error}</p>
           <button onClick={props.clearError} className="btn">
             Close
           </button>

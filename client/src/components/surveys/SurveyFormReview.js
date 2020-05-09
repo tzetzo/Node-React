@@ -12,7 +12,7 @@ const SurveyFormReview = ({
   createSurvey,
   processing,
   error,
-  clearError
+  clearError,
 }) => {
   const reviewFields = _.map(formFields, ({ name, label }) => {
     return (
@@ -26,8 +26,8 @@ const SurveyFormReview = ({
   return (
     <React.Fragment>
       <div>
-        <h5>Please confirm your entries</h5>
-        <div style={{margin: "3rem auto"}} >{reviewFields}</div>
+        <h5 className="test-review-heading">Please confirm your entries</h5>
+        <div style={{ margin: "3rem auto" }}>{reviewFields}</div>
         <button
           className="yellow darken-3 white-text btn-flat"
           onClick={onCancel}
@@ -36,7 +36,7 @@ const SurveyFormReview = ({
         </button>
         <button
           onClick={() => createSurvey(formValues)}
-          className="green btn-flat right white-text"
+          className="green btn-flat right white-text test-create-survey"
         >
           Create Survey
           <i className="material-icons right">email</i>
@@ -57,11 +57,8 @@ function mapStateToProps(state) {
   return {
     formValues: state.form.surveyForm.values,
     processing: state.surveys.processing,
-    error: state.surveys.error
+    error: state.surveys.error,
   };
 }
 
-export default connect(
-  mapStateToProps,
-  actions
-)(SurveyFormReview);
+export default connect(mapStateToProps, actions)(SurveyFormReview);
