@@ -14,6 +14,7 @@ cache:
     - client/node_modules
 install:
   - npm install
+  - npm install jest@24
   - npm run build # includes npm install & npm run build for the React app
 script:
   - nohup npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
