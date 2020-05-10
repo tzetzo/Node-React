@@ -6,7 +6,8 @@ services:
   - mongodb # will be started on Travis-CI Server
   - redis-server # will be started on Travis-CI Server
 env:
-  - NODE_ENV=ci PORT=3000 YARN_GPG=no
+  - NODE_ENV=ci PORT=3000
+  - YARN_GPG=no
   # process.env.NODE_ENV using keys from /config/ci.js specific to this environment
   # process.env.PORT our integration tests use localhost:3000
 cache:
