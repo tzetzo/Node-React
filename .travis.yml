@@ -21,3 +21,5 @@ script:
   - npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
   - sleep 3 # waits 3 seconds before executing the next script
   - npm run test
+  - sleep 30
+  - pkill node
