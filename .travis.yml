@@ -7,7 +7,6 @@ services:
   - redis-server # will be started on Travis-CI Server
 env:
   - NODE_ENV=ci PORT=3000
-  - YARN_GPG=no
   # process.env.NODE_ENV using keys from /config/ci.js specific to this environment
   # process.env.PORT our integration tests use localhost:3000
 cache:
@@ -19,6 +18,6 @@ install:
   - npm run build # includes npm install & npm run build for the React app
   - npm install jest@24
 script:
-  - nohup npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
+  - nohup npm run start #starts the node.js server in the background & not stopping it if Travis Server closes the shell
   - sleep 3 # waits 3 seconds before executing the next script
   - npm run test
