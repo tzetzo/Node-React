@@ -11,6 +11,6 @@ module.exports = {
   stripeSecretKey: "sk_test_HcpKEeSz2PHdIlsYTCmvSsLk",
   sendGridKey:
     "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",
-  redirectDomain: "http://localhost:5000",
+  redirectDomain: "http://localhost:3000",
   redisURL: "redis://127.0.0.1:6379",
 };
