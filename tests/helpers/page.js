@@ -5,7 +5,8 @@ const userFactory = require("../factories/userFactory");
 class CustomPage {
   static async build() {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true, //true for Travis-CI Server; false for when on localhost
+      args: ["--no-sandbox"], //dramatically decreases the time for the tests to run on Travis-CI
     });
 
     const page = await browser.newPage();
@@ -33,7 +34,7 @@ class CustomPage {
       { name: "express:sess.sig", value: sig }
     );
 
-    await this.page.goto("localhost:3000/surveys"); //refresh the tab
+    await this.page.goto("http://localhost:3000/surveys"); //refresh the tab
     await this.page.waitFor(".test-logout"); //wait for the Logout button to appear
   }
 

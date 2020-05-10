@@ -49,7 +49,7 @@ require("./routes/billingRoutes")(app);
 require("./routes/surveyRoutes")(app);
 
 //if none of the above routes dont match use the following routes(serve the React app) 109 lesson:
-if (process.env.NODE_ENV === "production") {
+if (["production", "ci"].includes(process.env.NODE_ENV)) {
   //serve up production assets like main.js & main.css:
   app.use(express.static("client/build")); //"npm run build" has to be executed inside the "client" folder when deploying in production
 

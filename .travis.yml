@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "10" # the version of node.js used for this project
+dist: trusty # using linux trusty OS distribution
+services:
+  - mongodb # will be started on Travis-CI Server
+  - redis-server # will be started on Travis-CI Server
+env:
+  - NODE_ENV=ci # process.env.NODE_ENV using keys from /config/ci.js specific to this environment
+  - PORT=3000 # process.env.PORT our integration tests use localhost:3000
+cache:
+  directories:
+    - node_modules # cache this dir to save time from installing dependancies next time when CI is fired
+    - client/node_modules
+install:
+  - npm install
+  - npm run build # includes npm install & npm run build for the React app
+script:
+  - nohup npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
+  - sleep 3 # waits 3 seconds before executing the next script
+  - npm run test

@@ -4,7 +4,7 @@ let page;
 
 beforeEach(async () => {
   page = await Page.build(); // page is the Proxy providing us access to our custom page, puppeteer browser & page
-  await page.goto("localhost:3000"); //navigate to our app
+  await page.goto("http://localhost:3000"); //navigate to our app
 });
 
 afterEach(async () => {
