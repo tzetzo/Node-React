@@ -23,4 +23,4 @@ script:
   - ps -aux
   - npm run test
   - sleep 30
-  - sudo killall node
+  - pkill --signal SIGINT index.js
