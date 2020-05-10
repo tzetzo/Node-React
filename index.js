@@ -10,7 +10,7 @@ require("./services/passport"); //not assigning to a const since we only want it
 require("./services/cache");
 
 //needed to test the /api/webhook & /api/surveys/webhooks endpoint from localhost
-if (process.env.NODE_ENV !== "production") {
+if (!["production", "ci"].includes(process.env.NODE_ENV)) {
   const ngrok = require("ngrok");
   (async function () {
     const url = await ngrok.connect(5000);
