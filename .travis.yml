@@ -23,4 +23,4 @@ script:
   - ps -aux
   - npm run test
   - sleep 30
-  - killall node
+  - sudo killall node
