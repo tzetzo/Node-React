@@ -1,5 +1,6 @@
 node_modules
 dev.js
+./config/ci.js
 services/emailTemplates/images
 redis/EventLog.dll
 redis/Redis on Windows Release Notes.docx
