@@ -4,5 +4,5 @@ if (process.env.NODE_ENV === "production") {
 } else if (process.env.NODE_ENV === "ci") {
   module.exports = require("./ci.js");
 } else {
-  module.exports = require("./dev");
+  module.exports = require("./dev.js");
 }
