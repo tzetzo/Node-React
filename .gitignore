@@ -1,3 +1,20 @@
 node_modules
 dev.js
 services/emailTemplates/images
+redis/EventLog.dll
+redis/Redis on Windows Release Notes.docx
+redis/Redis on Windows.docx
+redis/Windows Service Documentation.docx
+redis/dump.rdb
+redis/redis-benchmark.exe
+redis/redis-benchmark.pdb
+redis/redis-check-aof.exe
+redis/redis-check-aof.pdb
+redis/redis-cli.exe
+redis/redis-cli.pdb
+redis/redis-server.exe
+redis/redis-server.pdb
+redis/redis.windows-service.conf
+redis/redis.windows.conf
+redis/temp-10868.rdb
+redis/temp-5624.rdb
