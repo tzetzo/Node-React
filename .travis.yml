@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "10" # the version of node.js used for this project
 dist: trusty # using linux trusty OS distribution
+sudo: false
 services:
   - mongodb # will be started on Travis-CI Server
   - redis-server # will be started on Travis-CI Server
@@ -21,5 +22,5 @@ script:
   - npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
   - sleep 3 # waits 3 seconds before executing the next script
   - npm run test
-after_script:
+  - sleep 30
   - pkill node
