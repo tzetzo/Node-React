@@ -1,4 +1,3 @@
-process.title = "emaily";
 const express = require("express"); //commonJS module format as opposed to ES2015 module format(import, not supported by NodeJS)
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
