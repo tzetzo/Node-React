@@ -22,4 +22,4 @@ script:
   - sleep 3 # waits 3 seconds before executing the next script
   - npm run test
   - sleep 30
-  - kill %1
+  - kill $!
