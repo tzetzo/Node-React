@@ -22,7 +22,6 @@ if (!["production", "ci"].includes(process.env.NODE_ENV)) {
 // mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 //App
