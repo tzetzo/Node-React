@@ -20,7 +20,8 @@ stripePublishableKey: "...",
 stripeSecretKey: "...",
 sendGridKey:
 "...",
-redirectDomain: "http://localhost:5000"
+redirectDomain: "http://localhost:5000",
+redisURL:"..."
 };
 
 5. Install Redis on Windows(used as caching server for mongoose queries) :
