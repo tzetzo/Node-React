@@ -18,3 +18,5 @@ redis/redis.windows-service.conf
 redis/redis.windows.conf
 redis/temp-10868.rdb
 redis/temp-5624.rdb
+redis/temp-6604.rdb
+.vscode/settings.json

@@ -75,13 +75,21 @@ module.exports = (app) => {
     requireCredits,
     clearCache,
     async (req, res) => {
-      const { title, subject, body, recipients, fromEmail } = req.body;
+      const {
+        title,
+        subject,
+        body,
+        recipients,
+        fromEmail,
+        imageUrl,
+      } = req.body;
       const survey = new Survey({
         title,
         subject,
         body,
         recipients: recipients.split(",").map((email) => ({ email })), //the () needed so JS doesnt confuse {} with function body {}
         fromEmail,
+        imageUrl,
         _user: req.user.id,
         dateSent: Date.now(),
       }); //create and save to the Db a document in the collection

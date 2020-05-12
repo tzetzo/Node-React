@@ -62,8 +62,16 @@ class SurveyList extends Component {
                 : "N/A"}
             </p>
           </div>
-          <div className="card-content white-text center">
-            <Link to={`/surveys/delete/${survey._id}`} className="btn">
+          <div className="card-content white-text">
+            <img
+              style={{ height: "10rem" }}
+              alt=""
+              src={
+                `https://tzetzo-emaily-bucket.s3.amazonaws.com/${survey.imageUrl}` ||
+                "https://bit.ly/3cmbwQc"
+              }
+            />
+            <Link to={`/surveys/delete/${survey._id}`} className="btn right">
               Delete
             </Link>
           </div>

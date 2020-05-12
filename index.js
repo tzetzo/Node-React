@@ -46,6 +46,7 @@ app.use(passport.session());
 require("./routes/authRoutes")(app); //importing a function and immediately call it; 028 lesson
 require("./routes/billingRoutes")(app);
 require("./routes/surveyRoutes")(app);
+require("./routes/uploadRoutes")(app);
 
 //if none of the above routes dont match use the following routes(serve the React app) 109 lesson:
 if (["production", "ci"].includes(process.env.NODE_ENV)) {

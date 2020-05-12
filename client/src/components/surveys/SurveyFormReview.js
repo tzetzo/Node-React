@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import formFields from "./formFields";
 import * as actions from "../../actions";
@@ -14,6 +14,9 @@ const SurveyFormReview = ({
   error,
   clearError,
 }) => {
+  {/*For uploading image file*/}
+  const [file, setFile] = useState(null);
+
   const reviewFields = _.map(formFields, ({ name, label }) => {
     return (
       <div key={name}>
@@ -28,6 +31,17 @@ const SurveyFormReview = ({
       <div>
         <h5 className="test-review-heading">Please confirm your entries</h5>
         <div style={{ margin: "3rem auto" }}>{reviewFields}</div>
+
+        {/*Adding image upload input*/}
+        <h5>Add an Image</h5>
+        <input
+          onChange={(e) => {
+            setFile(e.target.files[0]);
+          }}
+          type="file"
+          accept="image/*"
+        />
+
         <button
           className="yellow darken-3 white-text btn-flat"
           onClick={onCancel}
@@ -35,7 +49,10 @@ const SurveyFormReview = ({
           Back
         </button>
         <button
-          onClick={() => createSurvey(formValues)}
+          onClick={() => {
+            {/*Sending image file separately as it will be directly uploaded to S3 before form values being sent to our Node back-end*/}
+            createSurvey(formValues, file);
+          }}
           className="green btn-flat right white-text test-create-survey"
         >
           Create Survey
