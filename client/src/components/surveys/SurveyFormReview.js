@@ -14,7 +14,7 @@ const SurveyFormReview = ({
   error,
   clearError,
 }) => {
-  {/*For uploading image file*/}
+  //For uploading image file
   const [file, setFile] = useState(null);
 
   const reviewFields = _.map(formFields, ({ name, label }) => {
@@ -50,7 +50,7 @@ const SurveyFormReview = ({
         </button>
         <button
           onClick={() => {
-            {/*Sending image file separately as it will be directly uploaded to S3 before form values being sent to our Node back-end*/}
+            // Sending image file separately as it will be directly uploaded to S3 before form values being sent to our Node back-end
             createSurvey(formValues, file);
           }}
           className="green btn-flat right white-text test-create-survey"
