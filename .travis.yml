@@ -21,4 +21,4 @@ install:
 script:
   - npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
   - sleep 3 # waits 3 seconds before executing the next script
-  - CI=true npm run test
+  - CI=true npm run test -- --coverage
