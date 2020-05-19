@@ -16,7 +16,7 @@ cache:
     - client/node_modules
 install:
   - npm install
-  - npm run build # includes npm install & npm run build for the React app
+  - CI=true npm run build # includes npm install & npm run build for the React app
   - npm install jest@24
 script:
   - npm run start & #starts the node.js server in the background & not stopping it if Travis Server closes the shell
