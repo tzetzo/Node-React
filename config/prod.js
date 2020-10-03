@@ -9,5 +9,5 @@ module.exports = {
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   sendGridKey: process.env.SEND_GRID_KEY,
   redirectDomain: process.env.REDIRECT_DOMAIN,
-  redisURL: process.env.REDIS_URL,
+  redisURL: process.env.REDIS_URL, //https://devcenter.heroku.com/articles/heroku-redis#provisioning-the-add-on
 };

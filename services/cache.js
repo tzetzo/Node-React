@@ -26,7 +26,8 @@ mongoose.Query.prototype.exec = async function () {
   }
 
   const subkey = JSON.stringify({
-    ...this.getQuery(),
+    //...this.getQuery(), //deprecated
+    ...this.getFilter(),
     collection: this.mongooseCollection.name,
   });
 
@@ -44,7 +45,7 @@ mongoose.Query.prototype.exec = async function () {
   // Otherwise, issue the query and store the result in redis
   const result = await exec.apply(this, arguments); //mongoose model is returned
 
-  client.hset(this.key, subkey, JSON.stringify(result)); //expire cached data after 10 seconds;
+  client.hset(this.key, subkey, JSON.stringify(result)); //adding " 'EX', 10 " expires cached data after 10 seconds;
 
   return result;
 };
