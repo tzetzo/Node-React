@@ -23,6 +23,7 @@ module.exports = (app) => {
         Bucket: "tzetzo-emaily-bucket",
         ContentType: "image/jpeg",
         Key: key,
+        //ContentLength: 1024, //size of the body in bytes
       },
       (err, url) => {
         // signed URL returned

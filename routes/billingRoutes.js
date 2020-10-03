@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("users");
 
-module.exports = app => {
+module.exports = (app) => {
   //https://github.com/stripe-samples/accept-a-card-payment/blob/master/using-webhooks/server/node/server.js#L37-L40
   app.post("/api/create-payment-intent", requireLogin, async (req, res) => {
     //const { items, currency } = req.body;
@@ -16,13 +16,13 @@ module.exports = app => {
       amount: 500, //calculateOrderAmount(items),
       currency: "usd", //currency
       description: "$5 for 5 email credits",
-      metadata: { userId: req.user.id } //include the user ID so that we can update the user when payment_intent.succeeded
+      metadata: { userId: req.user.id }, //include the user ID so that we can update the user when payment_intent.succeeded
     });
 
     // Send publishable key and PaymentIntent details to client
     res.send({
       //publishableKey: keys.stripePublishableKey,
-      clientSecret: paymentIntent.client_secret
+      clientSecret: paymentIntent.client_secret,
     });
   });
 
@@ -63,7 +63,7 @@ module.exports = app => {
       // console.log("💰 Payment captured!");
 
       User.findByIdAndUpdate(req.body.data.object.metadata.userId, {
-        $inc: { credits: 5 }
+        $inc: { credits: 5 },
       }).exec();
 
       res.send({}); //guarantees that whoever makes the request will not be left hanging; Stripe keeps sending the same event if we dont respond

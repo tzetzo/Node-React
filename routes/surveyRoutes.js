@@ -42,6 +42,7 @@ module.exports = (app) => {
       .map(({ email, url }) => {
         // new URL(url).pathname ex output:   api/surveys/5c97247352bb73130cbb99a1/no
         const match = p.test(new URL(url).pathname); //ex output: { surveyId: '5c97247352bb73130cbb99a1', choice: 'yes' }
+
         if (match) {
           return { ...match, email };
         }
@@ -87,7 +88,9 @@ module.exports = (app) => {
         title,
         subject,
         body,
-        recipients: recipients.split(",").map((email) => ({ email })), //the () needed so JS doesnt confuse {} with function body {}
+        recipients: recipients
+          .split(",")
+          .map((email) => ({ email: email.trim() })), //the () needed so JS doesnt confuse {} with function body {}
         fromEmail,
         imageUrl,
         _user: req.user.id,

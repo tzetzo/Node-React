@@ -42,14 +42,14 @@ mongoose.Query.prototype.exec = async function () {
   }
 
   // Otherwise, issue the query and store the result in redis
-  const result = await exec.apply(this, arguments);
+  const result = await exec.apply(this, arguments); //mongoose model is returned
 
-  client.hset(this.key, subkey, JSON.stringify(result)); //expire cached data after 10 seconds
+  client.hset(this.key, subkey, JSON.stringify(result)); //expire cached data after 10 seconds;
 
   return result;
 };
 
-// used in surveyRoutes to clear caches data in Redis
+// used in surveyRoutes to clear cached data in Redis
 module.exports = {
   clearCache(key) {
     client.del(JSON.stringify(key));

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   useStripe,
   useElements,
-  CardNumberElement
+  CardNumberElement,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 
@@ -16,13 +16,13 @@ function CheckoutForm({ userId, updateUserCredits }) {
   const [input, setInput] = useState({
     first_name: "",
     last_name: "",
-    postal_code: ""
+    postal_code: "",
   });
 
   const [cardInfo, setCardInfo] = useState({
     cardNumber: false,
     cardExpiry: false,
-    cardCvc: false
+    cardCvc: false,
   });
 
   const [processing, setProcessing] = useState(false);
@@ -30,15 +30,15 @@ function CheckoutForm({ userId, updateUserCredits }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const onInputChange = e =>
+  const onInputChange = (e) =>
     setInput({ ...input, [e.target.name]: e.target.value });
 
-  const onCardInfoChange = e =>
+  const onCardInfoChange = (e) =>
     e.complete
       ? setCardInfo({ ...cardInfo, [e.elementType]: true })
       : setCardInfo({ ...cardInfo, [e.elementType]: false });
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     setProcessing(true);
 
     const { first_name, last_name, postal_code } = input;
@@ -61,11 +61,11 @@ function CheckoutForm({ userId, updateUserCredits }) {
         card: elements.getElement(CardNumberElement),
         billing_details: {
           address: {
-            postal_code
+            postal_code,
           },
-          name: `${first_name} ${last_name}`
-        }
-      }
+          name: `${first_name} ${last_name}`,
+        },
+      },
     });
 
     // console.log(result, elements.getElement(CardElement));
@@ -131,7 +131,4 @@ const mapStateToProps = ({ auth }) => {
   return {};
 };
 
-export default connect(
-  mapStateToProps,
-  { updateUserCredits }
-)(CheckoutForm);
+export default connect(mapStateToProps, { updateUserCredits })(CheckoutForm);
