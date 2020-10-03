@@ -26,8 +26,8 @@ mongoose.Query.prototype.exec = async function () {
   }
 
   const subkey = JSON.stringify({
-    //...this.getQuery(), //deprecated
-    ...this.getFilter(),
+    ...this.getQuery(), //deprecated
+    // ...this.getFilter(),
     collection: this.mongooseCollection.name,
   });
 

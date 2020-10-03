@@ -22,7 +22,7 @@ module.exports = (app) => {
         .cache({ key: req.user.id }); // using the custom method defined on the prototype of the mongoose.Query Class in /services/cache.js
 
       if (!surveys) {
-        return res.status(404).send();
+        return res.status(404).send([]);
       }
 
       res.send(surveys);
