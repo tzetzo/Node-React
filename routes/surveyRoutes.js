@@ -11,7 +11,7 @@ const clearCache = require("../middlewares/clearCache");
 const Survey = mongoose.model("surveys"); //get the Mongoose Model; should already be created; instead of directly require the Model from '/models/Survey'! necessary to prevent an issue if testing is introduced
 
 module.exports = (app) => {
-  app.get("/api/surveys", requireLogin, async (req, res) => {
+  app.get("/api/surveys", requireLogin, clearCache, async (req, res) => {
     //path used by the React app to get the user surveys
     try {
       const surveys = await Survey.find({ _user: req.user.id })
@@ -35,7 +35,7 @@ module.exports = (app) => {
     res.send("Thanks for voting!");
   });
 
-  app.post("/api/surveys/webhook", (req, res) => {
+  app.post("/api/surveys/webhook", clearCache, (req, res) => {
     const p = Path.Path.createPath("/api/surveys/:surveyId/:choice"); //we want to extract surveyId & choice
 
     _.chain(req.body)
